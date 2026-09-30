@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MedFusion-Evo</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header class="hero">
+      <div>
+        <div class="eyebrow">BIOMEDICAL ARTIFICIAL INTELLIGENCE</div>
+        <h1>MedFusion-Evo</h1>
+        <p>Evolutionary multimodal AI for explainable pneumonia screening.</p>
+      </div>
+      <div class="pill">Research Prototype</div>
+    </header>
+
+    <section class="grid two">
+      <form id="patientForm" class="card">
+        <div class="section-head">
+          <h2>1. Patient &amp; X-Ray</h2>
+          <span id="fileName" class="muted">No image selected</span>
+        </div>
+
+        <label class="upload">
+          <input id="xray" type="file" accept="image/png,image/jpeg,image/webp" required />
+          <span>Upload chest X-ray</span>
+          <small>PNG, JPG or WebP • browser compresses large files</small>
+        </label>
+
+        <div class="preview-wrap">
+          <img id="preview" alt="X-ray preview" hidden />
+        </div>
+
+        <div class="fields">
+          <label>Age <input id="age" type="number" min="0" max="120" step="1" value="56" required /></label>
+          <label>Sex
+            <select id="sex" required>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </label>
+          <label>Temperature (°C) <input id="temperature" type="number" min="25" max="45" step="0.1" value="38.4" required /></label>
+          <label>SpO₂ (%) <input id="spo2" type="number" min="50" max="100" step="1" value="93" required /></label>
+          <label>WBC (10³/µL) <input id="wbc" type="number" min="0" max="100" step="0.1" value="8.5" required /></label>
+          <label>Neutrophils <input id="neutrophils" type="number" min="0" max="100" step="0.1" value="68" required /></label>
+          <label>Lymphocytes <input id="lymphocytes" type="number" min="0" max="100" step="0.1" value="23" required /></label>
+        </div>
+
+        <button id="analyzeBtn" type="submit">Analyze Patient</button>
+        <div id="status" class="status"></div>
+      </form>
+
+      <section id="results" class="card results-card" hidden>
+        <div class="section-head">
+          <h2>2. AI Screening Result</h2>
+          <span class="muted">MedFusion-Evo</span>
+        </div>
+        <div id="overall" class="overall"></div>
+
+        <div class="result-block">
+          <h3>X-Ray Analysis</h3>
+          <div id="xrayText"></div>
+          <div class="image-row">
+            <div><span class="caption">Original</span><img id="originalResult" alt="Original X-ray" /></div>
+            <div><span class="caption">Grad-CAM</span><img id="gradcam" alt="Grad-CAM explanation" /></div>
+          </div>
+        </div>
+
+        <div class="result-block">
+          <h3>GA-Selected Clinical Features</h3>
+          <div id="selectedFeatures" class="feature-list"></div>
+          <div id="clinicalTable"></div>
+        </div>
+
+        <div class="result-block">
+          <h3>SHAP Clinical Explanation</h3>
+          <div id="shap" class="shap-list"></div>
+        </div>
+
+        <div class="result-block small">
+          <h3>Fusion</h3>
+          <div id="fusionText"></div>
+        </div>
+
+        <p class="disclaimer">AI-assisted research/demo screening only. This score is not a medical diagnosis or a calibrated clinical probability.</p>
+      </section>
+    </section>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>
